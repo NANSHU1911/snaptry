@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SnapTry 拍照试穿</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>SnapTry <span>拍照试穿</span></h1>
+    <p class="sub">拖一件衣服 + 拍一张上身照，AI 生成试穿效果（MVP）</p>
+  </header>
+
+  <section class="card">
+    <h2>1. 衣服图</h2>
+    <div class="imgrow">
+      <img id="garmentPreview" class="preview" alt="衣服图预览">
+      <div class="btns">
+        <button id="btnUploadGarment" class="btn secondary">上传衣服图</button>
+        <input type="file" id="fileGarment" accept="image/*" hidden>
+      </div>
+    </div>
+    <p class="hint">也可以直接在服装网站上<strong>按住拖拽</strong>任意衣服图片，本插件会自动捕获。</p>
+  </section>
+
+  <section class="card">
+    <h2>2. 上身照</h2>
+    <div class="imgrow">
+      <img id="personPreview" class="preview" alt="上身照预览">
+      <div class="btns">
+        <button id="btnCamera" class="btn secondary">拍照</button>
+        <button id="btnUploadPerson" class="btn secondary">上传照片</button>
+        <input type="file" id="filePerson" accept="image/*" hidden>
+      </div>
+    </div>
+    <div id="cameraBox" class="hidden">
+      <video id="cameraVideo" autoplay playsinline></video>
+      <div class="btns">
+        <button id="btnShoot" class="btn">拍摄</button>
+        <button id="btnCameraClose" class="btn secondary">关闭</button>
+      </div>
+      <canvas id="cameraCanvas" hidden></canvas>
+    </div>
+    <p class="hint">建议正面半身照、光线充足，效果最稳。</p>
+  </section>
+
+  <section class="card consent">
+    <label class="consent-line">
+      <input type="checkbox" id="consentBox">
+      <span>我已知晓并同意：试穿照片（衣服图＋上身照）将被上传到<strong>海外服务器</strong>的 AI 试穿服务进行处理，处理完成后按服务商政策保留或删除。请勿上传涉密照片或他人照片。</span>
+    </label>
+  </section>
+
+  <button id="btnTryon" class="btn primary" disabled>开始试穿</button>
+  <div id="status" class="status"></div>
+
+  <section class="card hidden" id="resultCard">
+    <h2>试穿结果</h2>
+    <img id="resultImg" class="preview large" alt="试穿结果">
+    <div class="btns">
+      <a id="btnDownload" class="btn secondary" download="snaptry-result.jpg">下载图片</a>
+    </div>
+  </section>
+
+  <details class="settings">
+    <summary>网关设置</summary>
+    <label>网关地址
+      <input type="text" id="gatewayUrl" placeholder="http://服务器IP:端口">
+    </label>
+    <label>网关密钥
+      <input type="password" id="gatewayKey" placeholder="GATEWAY_API_KEY">
+    </label>
+    <button id="btnSaveSettings" class="btn secondary small">保存</button>
+    <p class="hint">密钥由部署者在服务器环境变量中设置，此处填写同一值。</p>
+  </details>
+</div>
+<script src="popup.js"></script>
+</body>
+</html>
